@@ -21,7 +21,7 @@ div#root {
   right: 5rem;
   top: .5rem;
 }
-#close-menu-button {
+#close-menu-button, #hamburger {
   display: inline-flex;
   -moz-box-align: center;
   align-items: center;
@@ -37,7 +37,7 @@ div#root {
   appearance: none;
   text-decoration: none;
   padding: 8px;
-  transition: ease-in .2s all;
+  transition: ease-in .25s all;
   border-radius: 50%;
   width: 40px;
   height: 40px;
