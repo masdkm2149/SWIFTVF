@@ -21,7 +21,7 @@
 div#root {
   width: 100%;
 }
-div.MuiBox-root div#close-menu-button-container, #hamburger, button#close-menu-button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root, .MuiBox-root > button:nth-child(1)#hamburger, div.MuiContainer-root.MuiContainer-maxWidthLg.css-8gkiju-MuiContainer-root div.MuiBox-root.css-1jl5ek div.MuiBox-root.css-1obf64m div#close-menu-button-container.hide button#close-menu-button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root  {
+#close-menu-button-container, #hamburger, button#close-menu-button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root, .MuiBox-root > button:nth-child(1)#hamburger, div.MuiContainer-root.MuiContainer-maxWidthLg.css-8gkiju-MuiContainer-root div.MuiBox-root.css-1jl5ek div.MuiBox-root.css-1obf64m div#close-menu-button-container.hide button#close-menu-button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root  {
   top: 1.5rem;
   position: fixed;
   right: 2rem;
