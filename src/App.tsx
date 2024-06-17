@@ -139,7 +139,7 @@ const showMenu = (event, newValue) => {
     document.querySelector('#hamburger').classList.add('hide'),
     setTimeout(() => (
     document.querySelector('#close-menu-button-container').classList.remove('hide')
-    ), 100);  
+    ), 150);  
   };
   
   const handleChange = (event, newValue) => {
