@@ -219,7 +219,7 @@ button:focus-visible {
     padding-bottom: 0;
   }
 
- button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root, div#resize-color-button.MuiBox-root.css-0 button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root svg  {
+  button#hamburger, button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root, div#resize-color-button.MuiBox-root.css-0 button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root svg  {
     color: var(--color-module-bordercolor);   
     fill: var(--color-module-bordercolor)!important; 
     transition: ease .4s all;
@@ -256,7 +256,7 @@ border-radius: 1rem;
     transition:cubic-bezier(.45,.05,.55,.95) .25s all;
   }
 
-  .active-color-module-highlight, button.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.MuiButton-colorPrimary.MuiButton-disableElevation.MuiButtonGroup-grouped.MuiButtonGroup-groupedVertical.MuiButtonGroup-groupedText.MuiButtonGroup-groupedTextVertical.MuiButtonGroup-groupedTextPrimary.MuiButtonGroup-firstButton.css-cghv7y-MuiButtonBase-root-MuiButton-root.active-color-module-highlight {
+  .active-color-module-highlight, button.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.MuiButton-colorPrimary.MuiButton-disableElevation.MuiButtonGroup-grouped.MuiButtonGroup-groupedVertical.MuiButtonGroup-groupedText.MuiButtonGroup-groupedTextVertical.MuiButtonGroup-groupedTextPrimary.active-color-module-highlight, button.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.MuiButton-colorPrimary.MuiButton-disableElevation.MuiButtonGroup-grouped.MuiButtonGroup-groupedVertical.MuiButtonGroup-groupedText.MuiButtonGroup-groupedTextVertical.MuiButtonGroup-groupedTextPrimary.MuiButtonGroup-firstButton.css-cghv7y-MuiButtonBase-root-MuiButton-root.active-color-module-highlight {
     color: var(--active-color-module-highlight);
     border-color: var(--active-color-module-highlight);
   }  
