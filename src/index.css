@@ -16,6 +16,34 @@
 div#root {
   width: 100%;
 }
+
+#color-selection-menu-item > button:nth-child(1) {
+  right: 5rem;
+  top: .5rem;
+}
+#close-menu-button {
+  display: inline-flex;
+  -moz-box-align: center;
+  align-items: center;
+  -moz-box-pack: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background-color: transparent;
+  outline: 0px;
+  border: 0px;
+  margin: 0px;
+  user-select: none;
+  vertical-align: middle;
+  appearance: none;
+  text-decoration: none;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  width: 40px;
+  height: 40px;
+}
+
+
 #close-menu-button-container button, #hamburger, button#close-menu-button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root, .MuiBox-root > button:nth-child(1)#hamburger, div.MuiContainer-root.MuiContainer-maxWidthLg.css-8gkiju-MuiContainer-root div.MuiBox-root.css-1jl5ek div.MuiBox-root.css-1obf64m div#close-menu-button-container.hide button#close-menu-button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root  {
   top: 1.5rem;
   position: fixed;
@@ -27,10 +55,6 @@ div#root {
   top: 1rem;
   position: fixed;
   right: 0rem;
-}
-#color-selection-menu-item > button:nth-child(1) {
-  right: 5.25rem;
-  top: .8rem;
 }
 .slideup{
   animation: slideup .5s cubic-bezier(0.68, -0.6, 0.32, 1.6) 0s 1 normal forwards;
