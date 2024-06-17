@@ -219,7 +219,8 @@ button:focus-visible {
     padding-bottom: 0;
   }
 
-  #color-selection-menu-item button, button#hamburger, #close-color-button button, #resize-color-button button, button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root, div#resize-color-button.MuiBox-root.css-0 button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root svg  {
+  
+#close-menu-button-container button, #color-selection-menu-item button, button#hamburger, #close-color-button button, #resize-color-button button, button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root, div#resize-color-button.MuiBox-root.css-0 button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-1drgtl0-MuiButtonBase-root-MuiIconButton-root svg  {
     color: var(--color-module-bordercolor);   
     fill: var(--color-module-bordercolor)!important; 
     transition: ease .4s all;
