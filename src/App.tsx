@@ -128,7 +128,8 @@ const scaleColorModule = event => {
 
 const hideMenu = (event, newValue) => {    
   document.querySelector('#color-selection-menu-item').classList.add('hide'),
-  document.querySelector('#close-menu-button').classList.add('hide'),
+  document.querySelector('#close-menu-button-container').classList.add('hide'),
+  document.querySelector('#close-menu-button-container').classList.remove('undisplay')
   setTimeout(() => (
   document.querySelector('#hamburger').classList.remove('hide')  
 ), 100);  
@@ -138,8 +139,13 @@ const showMenu = (event, newValue) => {
     document.querySelector('#color-selection-menu-item').classList.remove('hide'),
     document.querySelector('#hamburger').classList.add('hide'),
     setTimeout(() => (
-    document.querySelector('#close-menu-button').classList.remove('hide')
-    ), 100);  
+    document.querySelector('#close-menu-button-container').classList.remove('hide')
+  ), 100);  
+
+  
+  setTimeout(() => (
+    document.querySelector('#close-menu-button-container').classList.add('undisplay')
+  ), 275);  
   };
   
   const handleChange = (event, newValue) => {
@@ -194,13 +200,13 @@ const showMenu = (event, newValue) => {
             
            <Box id="hamburger-box" sx={{display: 'contents'}}>    
            
-           <IconButton id="hamburger" ><MenuRoundedIcon onClick={showMenu} sx={{ cursor: 'Pointer' }}  fontSize="large"/>
+           <IconButton id="hamburger" onClick={showMenu} ><MenuRoundedIcon  sx={{ cursor: 'Pointer' }}  fontSize="large"/>
            </IconButton>   
            {navOptions} 
                
                 </Box>  
-                <Box id="close-menu-button-container" sx={{display: 'contents'}} >
-    <IconButton id="close-menu-button" class="hide"><CloseIcon onClick={hideMenu} sx={{ cursor: 'Pointer' }}  fontSize="large"/>
+                <Box id="close-menu-button-container" class="hide">
+    <IconButton id="close-menu-button" onClick={hideMenu}><CloseIcon  sx={{ cursor: 'Pointer' }}  fontSize="large"/>
     </IconButton></Box>
             <span id="Text" spellCheck="false" contentEditable="true"> {text} </span>      
       </Box>
