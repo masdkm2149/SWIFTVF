@@ -93,6 +93,7 @@ const showbgcolor = event => {
   document.querySelector('#bg-picker').classList.add('on'); 
   document.querySelector('#fg-picker').classList.remove('on'); 
   document.querySelector('button.MuiButton-root:nth-child(2)').classList.add('inactive-color-module-shadow'); 
+  document.querySelector('button.MuiButton-root:nth-child(2)').classList.remove('active-color-module-highlight'); 
   document.querySelector('button.MuiButton-root:nth-child(1)').classList.remove('inactive-color-module-shadow'); 
   document.querySelector('button.MuiButton-root:nth-child(1)').classList.add('active-color-module-highlight'); 
 };
