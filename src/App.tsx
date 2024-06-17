@@ -128,7 +128,7 @@ const scaleColorModule = event => {
 
 const hideMenu = (event, newValue) => {    
   document.querySelector('#color-selection-menu-item').classList.add('hide'),
-  document.querySelector('#close-menu-button-container').classList.add('hide'),
+  document.querySelector('#close-menu-button').classList.add('hide'),
   setTimeout(() => (
   document.querySelector('#hamburger').classList.remove('hide')  
 ), 100);  
@@ -138,8 +138,8 @@ const showMenu = (event, newValue) => {
     document.querySelector('#color-selection-menu-item').classList.remove('hide'),
     document.querySelector('#hamburger').classList.add('hide'),
     setTimeout(() => (
-    document.querySelector('#close-menu-button-container').classList.remove('hide')
-    ), 150);  
+    document.querySelector('#close-menu-button').classList.remove('hide')
+    ), 100);  
   };
   
   const handleChange = (event, newValue) => {

@@ -16,7 +16,6 @@
 
 #close-menu-button-container {
   display: contents; 
-  transition: all .25s ease-in-out;
 }
 div#root {
   width: 100%;
