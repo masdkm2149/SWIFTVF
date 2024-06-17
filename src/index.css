@@ -37,6 +37,7 @@ div#root {
   appearance: none;
   text-decoration: none;
   padding: 8px;
+  transition: ease-in .2s all;
   border-radius: 50%;
   width: 40px;
   height: 40px;
