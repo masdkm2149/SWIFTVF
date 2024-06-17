@@ -199,7 +199,7 @@ const showMenu = (event, newValue) => {
            {navOptions} 
                
                 </Box>  
-                <Box id="close-menu-button-container" >
+                <Box id="close-menu-button-container" sx={{display: 'contents'}} >
     <IconButton id="close-menu-button" class="hide"><CloseIcon onClick={hideMenu} sx={{ cursor: 'Pointer' }}  fontSize="large"/>
     </IconButton></Box>
             <span id="Text" spellCheck="false" contentEditable="true"> {text} </span>      

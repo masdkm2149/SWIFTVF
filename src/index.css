@@ -13,10 +13,6 @@
 [contenteditable] {
   outline: 0px solid transparent;
 }
-
-#close-menu-button-container {
-  display: contents; 
-}
 div#root {
   width: 100%;
 }
