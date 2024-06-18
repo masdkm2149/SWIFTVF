@@ -78,7 +78,6 @@ const showfgcolor = event => {
       document.querySelector('#bg-picker').classList.remove('full');
       document.querySelector('#bg-picker').classList.add('mini');
     }
-    
     document.querySelector('#fgcolor').classList.add('slideup');
     setTimeout(() => document.querySelector('#fgcolor').classList.remove('slideup'), 500);
   }
@@ -126,28 +125,28 @@ const scaleColorModule = event => {
 
 
 
-const hideMenu = (event, newValue) => {    
+const hideMenu = event => {    
   document.querySelector('#color-selection-menu-item').classList.add('hide'),
   document.querySelector('#close-menu-button-container').classList.add('hide'),
-  document.querySelector('#close-menu-button-container').classList.remove('undisplay')
   setTimeout(() => (
   document.querySelector('#hamburger').classList.remove('hide')  
 ), 100);  
+setTimeout(() => (
+  document.querySelector('#close-menu-button-container').classList.remove('undisplay')
+), 0);  
 };
 
-const showMenu = (event, newValue) => {    
+const showMenu = event => {    
     document.querySelector('#color-selection-menu-item').classList.remove('hide'),
     document.querySelector('#hamburger').classList.add('hide'),
     setTimeout(() => (
     document.querySelector('#close-menu-button-container').classList.remove('hide')
   ), 100);  
-
-  
   setTimeout(() => (
     document.querySelector('#close-menu-button-container').classList.add('undisplay')
   ), 275);  
   };
-  
+
   const handleChange = (event, newValue) => {
     squiValue(newValue);    
   };
@@ -161,6 +160,10 @@ const showMenu = (event, newValue) => {
     twghValue(newValue);    
   };
   
+const resizeColorModuleButton = [
+  <Box onClick={scaleColorModule} id="resize-color-button"><Tooltip title="Shrink / Expand" arrow><IconButton><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 30" x="0px" y="0px"><path d="m19,4.25h-6c-.414,0-.75.336-.75.75s.336.75.75.75h4.189l-11.439,11.439v-4.189c0-.414-.336-.75-.75-.75s-.75.336-.75.75v6c0,.414.336.75.75.75h6c.414,0,.75-.336.75-.75s-.336-.75-.75-.75h-4.189l11.439-11.439v4.189c0,.414.336.75.75.75s.75-.336.75-.75v-6c0-.414-.336-.75-.75-.75Z"/></svg></IconButton></Tooltip></Box>,
+]
+
   const buttons = [
     <Button onClick={showbgcolor} key="one"><ImageOutlinedIcon/>Background</Button>,
     <Button onClick={showfgcolor} key="two"><FormatColorTextIcon/>Text</Button>,
@@ -206,8 +209,19 @@ const showMenu = (event, newValue) => {
                
                 </Box>  
                 <Box id="close-menu-button-container" class="hide">
-    <IconButton id="close-menu-button" onClick={hideMenu}><CloseIcon  sx={{ cursor: 'Pointer' }}  fontSize="large"/>
-    </IconButton></Box>
+                <Tooltip slotProps={{
+        popper: {
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [0, -6],
+              },
+            },
+          ],
+        },
+      }} title="Exit" arrow><IconButton id="close-menu-button" onClick={hideMenu}><CloseIcon  sx={{ cursor: 'Pointer' }}  fontSize="large"/>
+    </IconButton></Tooltip></Box>
             <span id="Text" spellCheck="false" contentEditable="true"> {text} </span>      
       </Box>
 
@@ -313,9 +327,8 @@ const showMenu = (event, newValue) => {
        <Saturation  height={160} color={bgcolor} onChange={setbgColor}   />
        <ColorPicker color={bgcolor} onChange={setbgColor}  />  </Box>
        
-
-       <Box onClick={scaleColorModule} id="resize-color-button"><IconButton><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 30" x="0px" y="0px"><path d="m19,4.25h-6c-.414,0-.75.336-.75.75s.336.75.75.75h4.189l-11.439,11.439v-4.189c0-.414-.336-.75-.75-.75s-.75.336-.75.75v6c0,.414.336.75.75.75h6c.414,0,.75-.336.75-.75s-.336-.75-.75-.75h-4.189l11.439-11.439v4.189c0,.414.336.75.75.75s.75-.336.75-.75v-6c0-.414-.336-.75-.75-.75Z"/></svg></IconButton></Box>
-       <Box onClick={closeColorModule} id="close-color-button"><IconButton><CancelRoundedIcon sx={{width: '2.25rem', height: '2.25rem'}} /></IconButton></Box>
+ {resizeColorModuleButton}       
+ <Box onClick={closeColorModule} id="close-color-button"><Tooltip title="Exit" arrow><IconButton><CancelRoundedIcon sx={{width: '2.25rem', height: '2.25rem'}} /></IconButton></Tooltip></Box>
 </Box></Box></Box>
 </Box>
 </Container> 
