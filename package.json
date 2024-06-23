@@ -14,10 +14,12 @@
   },
   "dependencies": {
     "@mui/icons-material": "^5.15.18",
+    "accessible-colors": "^1.0.5",
     "auto-text-size": "^0.2.3",
     "react": "^18.2.0",
     "react-color-palette": "^7.1.1",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.6"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

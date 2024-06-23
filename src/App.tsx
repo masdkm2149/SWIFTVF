@@ -2,10 +2,13 @@ import * as React from 'react';
 import { Box, Container, formLabelClasses }from '@mui/material';
 import Slider from '@mui/material/Slider';
 import SWIFT from './assets/fonts/SWIFTVF.ttf';
-import { AutoTextSize } from "auto-text-size";
+//import { AutoTextSize } from "auto-text-size";//
 import { useState } from "react";
+import Draggable from 'react-draggable'; // The default
 import { ColorPicker, Saturation, Hue, Alpha, useColor } from "react-color-palette";
+import { getRandomAAColor } from 'accessible-colors';
 import "react-color-palette/css";
+import { suggestAAColorVariant, suggestAAAColorVariant } from 'accessible-colors';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -58,7 +61,11 @@ const loadmenu = event => {
     if (document.querySelector('.MuiSlider-root')) { 
     for (let i = 0; i < document.querySelectorAll('.MuiSlider-root').length; i++) 
       { 
-    document.querySelectorAll('.MuiSlider-root')[i].style = 'color:'+compfgColor}
+        document.querySelector(':root').style.setProperty('color', suggestAAColorVariant(fgcolor.hex, bgcolor.hex, true))
+document.documentElement.style.setProperty('--color-module-bordercolor-AA', suggestAAColorVariant(getComputedStyle(document.documentElement).getPropertyValue('--color-module-bordercolor'), bgcolor.hex, true))
+document.documentElement.style.setProperty('--color-module-bordercolor-hover-AA', suggestAAColorVariant(getComputedStyle(document.documentElement).getPropertyValue('--color-module-bordercolor-hover'), bgcolor.hex, true))
+document.querySelector(':root').style.setProperty('--active-button-state-color-AAA', suggestAAAColorVariant(getComputedStyle(document.documentElement).getPropertyValue('--active-button-state-color'), bgcolor.hex, true))
+document.querySelectorAll('.MuiSlider-root')[i].style = 'color:'+suggestAAColorVariant(fgcolor.hex, bgcolor.hex, true)}
   }
 }
 
@@ -67,12 +74,14 @@ const showfgcolor = event => {
   if (document.querySelector('#fgcolor').classList.contains('on')) {}
   else { 
     if (innerWidth > 500) {
+      document.querySelector('div#root').style.setProperty('--offset-color-picker-after', '615px');
       document.querySelector('#fg-picker').classList.remove('mini');
       document.querySelector('#fg-picker').classList.add('full');      
       document.querySelector('#bg-picker').classList.remove('mini');
       document.querySelector('#bg-picker').classList.add('full');
     }
     if (innerWidth < 500) {
+      document.querySelector('div#root').style.setProperty('--offset-color-picker-after', '472px');
       document.querySelector('#fg-picker').classList.remove('full');
       document.querySelector('#fg-picker').classList.add('mini');
       document.querySelector('#bg-picker').classList.remove('full');
@@ -113,14 +122,22 @@ setTimeout(() => (
 
 };
 const scaleColorModule = event => {
-  document.querySelector('#fg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.add('hide');
   document.querySelector('#fg-picker').classList.toggle('mini'),
   document.querySelector('#fg-picker').classList.toggle('full'),
   document.querySelector('#bg-picker').classList.toggle('mini'),
   document.querySelector('#bg-picker').classList.toggle('full')
-  setTimeout(() => (
-    document.querySelector('#fg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.remove('hide')
-  ), 100);
+  if (document.querySelector('#fg-picker').classList.contains('on')) { 
+     document.querySelector('#fg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.add('hide');
+     setTimeout(() => (
+      document.querySelector('#fg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.remove('hide')
+    ), 100);
+    }
+  else if (document.querySelector('#bg-picker').classList.contains('on')) { 
+      document.querySelector('#bg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.add('hide');
+      setTimeout(() => (
+       document.querySelector('#bg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.remove('hide')
+     ), 100);
+     }
 };
 
 
@@ -186,9 +203,11 @@ const resizeColorModuleButton = [
   
   return (
     <ThemeProvider theme={theme}>
-    <Container
+    <Container maxWidth="unset"
     sx={{              
-      padding: 0,
+      padding: '0 clamp(32px, 10%, 160px)!important',
+      lineBreak: 'anywhere',
+      margin: 0,
       flex: 1,
            }}>   
             <Box  sx={{
@@ -307,8 +326,15 @@ const resizeColorModuleButton = [
 </Box>
 
 </Box>     
+
 <Box>  
-<Box id="fgcolor">  <Box id="color-module-container-border"> <Box id="color-module-container"  sx={{color: theme.palette.background.default }}>
+
+<Draggable 
+axis="both" handle=".on" cancel='#color-module-container-border'
+><Box>
+
+<Box id="fgcolor">  
+ <Box id="color-module-container-border"> <Box id="color-module-container"  sx={{color: theme.palette.background.default }}>
   
 <p id="color-picker-header">Color Picker</p>
    <Box>       <ButtonGroup sx={{flexDirection:'row'}} 
@@ -330,7 +356,7 @@ const resizeColorModuleButton = [
  {resizeColorModuleButton}       
  <Box onClick={closeColorModule} id="close-color-button"><Tooltip title="Exit" arrow><IconButton><CancelRoundedIcon sx={{width: '2.25rem', height: '2.25rem'}} /></IconButton></Tooltip></Box>
 </Box></Box></Box>
-</Box>
+</Box></Draggable></Box>
 </Container> 
 </ThemeProvider>
   );  
