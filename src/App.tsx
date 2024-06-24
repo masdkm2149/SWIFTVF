@@ -34,11 +34,6 @@ export default function SliderSizes() {
       }),
     [prefersDarkMode],
   );
-  const getcolormodheight = event => {    
-    if (document.querySelector('#fgcolor')) {
-    useState(document.querySelector('#fgcolor').clientHeight)
-  }
-  };
 
 
 const loadmenu = event => {    
@@ -61,10 +56,12 @@ const loadmenu = event => {
 
   {document.body.style = 'background-color:'+compbgColor}
 
+
+
   {
     if (document.querySelector('.MuiSlider-root')) { 
     for (let i = 0; i < document.querySelectorAll('.MuiSlider-root').length; i++) 
-      { 
+      {
         document.querySelector(':root').style.setProperty('color', suggestAAColorVariant(fgcolor.hex, bgcolor.hex, true))
 document.documentElement.style.setProperty('--color-module-bordercolor-AA', suggestAAColorVariant(getComputedStyle(document.documentElement).getPropertyValue('--color-module-bordercolor'), bgcolor.hex, true))
 document.documentElement.style.setProperty('--color-module-bordercolor-hover-AA', suggestAAColorVariant(getComputedStyle(document.documentElement).getPropertyValue('--color-module-bordercolor-hover'), bgcolor.hex, true))
@@ -73,12 +70,14 @@ document.querySelectorAll('.MuiSlider-root')[i].style = 'color:'+suggestAAColorV
   }
 }
 
+
 const showfgcolor = event => {    
   hideMenu();
-  if (document.querySelector('#fgcolor').classList.contains('on')) {}
+   if (document.querySelector('#fgcolor').classList.contains('on')) {}
   else { 
     if (innerWidth > 500) {
       document.querySelector('div#root').style.setProperty('--offset-color-picker-after', '615px');
+      document.querySelector('#root').style.setProperty('--colorpicker-box', '615px');
       document.querySelector('#fg-picker').classList.remove('mini');
       document.querySelector('#fg-picker').classList.add('full');      
       document.querySelector('#bg-picker').classList.remove('mini');
@@ -86,11 +85,12 @@ const showfgcolor = event => {
     }
     if (innerWidth < 500) {
       document.querySelector('div#root').style.setProperty('--offset-color-picker-after', '472px');
+      document.querySelector('#root').style.setProperty('--colorpicker-box', '615px');
       document.querySelector('#fg-picker').classList.remove('full');
       document.querySelector('#fg-picker').classList.add('mini');
       document.querySelector('#bg-picker').classList.remove('full');
       document.querySelector('#bg-picker').classList.add('mini');
-    }
+   }
     document.querySelector('#fgcolor').classList.add('slideup');
     setTimeout(() => document.querySelector('#fgcolor').classList.remove('slideup'), 500);
   }
