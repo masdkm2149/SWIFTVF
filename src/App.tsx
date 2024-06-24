@@ -151,8 +151,6 @@ const scaleColorModule = event => {
     }
 };
 
-
-
 const hideMenu = event => {    
   document.querySelector('#color-selection-menu-item').classList.add('hide'),
   document.querySelector('#close-menu-button-container').classList.add('hide'),
@@ -191,7 +189,6 @@ const showMenu = event => {
 const resizeColorModuleButton = [
   <Box onClick={scaleColorModule} id="resize-color-button"><Tooltip title="Shrink / Expand" arrow><IconButton><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 30" x="0px" y="0px"><path d="m19,4.25h-6c-.414,0-.75.336-.75.75s.336.75.75.75h4.189l-11.439,11.439v-4.189c0-.414-.336-.75-.75-.75s-.75.336-.75.75v6c0,.414.336.75.75.75h6c.414,0,.75-.336.75-.75s-.336-.75-.75-.75h-4.189l11.439-11.439v4.189c0,.414.336.75.75.75s.75-.336.75-.75v-6c0-.414-.336-.75-.75-.75Z"/></svg></IconButton></Tooltip></Box>,
 ]
-
   const buttons = [
     <Button onClick={showbgcolor} key="one"><ImageOutlinedIcon/>Background</Button>,
     <Button onClick={showfgcolor} key="two"><FormatColorTextIcon/>Text</Button>,
