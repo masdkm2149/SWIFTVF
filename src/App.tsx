@@ -34,9 +34,13 @@ export default function SliderSizes() {
       }),
     [prefersDarkMode],
   );
+  const getcolormodheight = event => {    
+    if (document.querySelector('#fgcolor')) {
+    useState(document.querySelector('#fgcolor').clientHeight)
+  }
+  };
 
 
-  
 const loadmenu = event => {    
   if (document.querySelector('#hamburger-box')) {
   document.querySelector('#hamburger-box').classList.remove('hide') 
@@ -330,8 +334,8 @@ const resizeColorModuleButton = [
 <Box>  
 
 <Draggable 
-axis="both" handle=".on" cancel='#color-module-container-border'
-><Box>
+axis="both" handle=".on" cancel='#fgcolor::after'
+><Box sx={{}}>
 
 <Box id="fgcolor">  
  <Box id="color-module-container-border"> <Box id="color-module-container"  sx={{color: theme.palette.background.default }}>
