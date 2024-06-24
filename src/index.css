@@ -20,6 +20,15 @@
 .undisplay {
   display: contents;
 }
+
+div#draggable-area > *  {
+  pointer-events: auto;
+}
+#draggable-area {
+  pointer-events: none;
+  display: none;
+}
+
 #close-menu-button-container {
   transition: .25s ease-in;
 }
@@ -57,19 +66,35 @@ div#root {
 }
 
 
-div.react-draggable:not(.react-draggable-dragged, .react-draggable-dragging){transform: none!important;}
+div.react-draggable:not(.react-draggable-dragged, .react-draggable-dragging){cursor: all-scroll;transform: none!important;}
 
 
-div.react-draggable:not(.react-draggable-dragged, .react-draggable-dragging) #fgcolor {
-  right: 24px; 
-  bottom: 24px; 
+div.react-draggable:not(.react-draggable-dragged, .react-draggable-dragging) {
+  right: 1rem; 
+  bottom: 1rem; 
+  position: absolute;
+  cursor: all-scroll;
+}
+
+div.react-draggable {
+  width: var(--colorpicker-box-width);
+  height: var(--colorpicker-box-height);
+  transition: .25s height ease;
+  overflow: clip;
 }
 
 div.react-draggable.react-draggable-dragged, div.react-draggable.react-draggable-dragging {
-  bottom: var(--offset-color-picker-after);
-  right: 328px;
+  right: 1rem;
+  bottom: 1rem;
   position: absolute;
 }
+div.react-draggable.react-draggable-dragged {
+  cursor: all-scroll;
+}
+div.react-draggable.react-draggable-dragging {
+  cursor: -webkit-grabbing;
+}
+cursor: all-scroll;
 
 div#fgcolor.MuiBox-root.css-0.on.shrink-color-module div#color-module-container-border.MuiBox-root.css-0 div#color-module-container.MuiBox-root.css-cywksh div#fg-picker{
   transition: height .5s ease;
@@ -102,24 +127,11 @@ div#fgcolor.MuiBox-root.css-0.on.shrink-color-module div#color-module-container-
 #fg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2), 
 #bg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2) {transition: .4s height ease-out, .05s ease-in-out opacity;}
 
-#fgcolor::after {
-  content: "";
-  padding: 1rem;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: -1rem;
-  left: -1rem;
-}
 
-
-#color-module-container-border {
+#color-module-container-border, #fgcolor {
   cursor: auto;
 }
 
-#fgcolor {
-  cursor: all-scroll;
-}
 
 #color-module-container {
   border: 30px solid;
@@ -171,7 +183,7 @@ body {
   display: none; 
 }
 
-.on#fgcolor, .on#bgcolor, .on#fg-picker, .on#bg-picker {   display:table;
+.on#draggable-area, .on#fgcolor, .on#bgcolor, .on#fg-picker, .on#bg-picker {   display:table;
 }
 .mini.on#fgcolor, .mini.on#bgcolor  {   padding: 0 24px; max-width:350px; width: 80%; }
 

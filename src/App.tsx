@@ -56,7 +56,7 @@ const loadmenu = event => {
 
   {document.body.style = 'background-color:'+compbgColor}
 
-
+var testing = innerWidth -333;
 
   {
     if (document.querySelector('.MuiSlider-root')) { 
@@ -76,16 +76,12 @@ const showfgcolor = event => {
    if (document.querySelector('#fgcolor').classList.contains('on')) {}
   else { 
     if (innerWidth > 500) {
-      document.querySelector('div#root').style.setProperty('--offset-color-picker-after', '615px');
-      document.querySelector('#root').style.setProperty('--colorpicker-box', '615px');
       document.querySelector('#fg-picker').classList.remove('mini');
       document.querySelector('#fg-picker').classList.add('full');      
       document.querySelector('#bg-picker').classList.remove('mini');
       document.querySelector('#bg-picker').classList.add('full');
     }
     if (innerWidth < 500) {
-      document.querySelector('div#root').style.setProperty('--offset-color-picker-after', '472px');
-      document.querySelector('#root').style.setProperty('--colorpicker-box', '615px');
       document.querySelector('#fg-picker').classList.remove('full');
       document.querySelector('#fg-picker').classList.add('mini');
       document.querySelector('#bg-picker').classList.remove('full');
@@ -94,12 +90,14 @@ const showfgcolor = event => {
     document.querySelector('#fgcolor').classList.add('slideup');
     setTimeout(() => document.querySelector('#fgcolor').classList.remove('slideup'), 500);
   }
-  document.querySelector('#fgcolor').classList.add('on'); document.querySelector('#fg-picker').classList.add('on');  
+  document.querySelector('#draggable-area').classList.add('on'); document.querySelector('#fgcolor').classList.add('on'); document.querySelector('#fg-picker').classList.add('on');  
   document.querySelector('#bg-picker').classList.remove('on');
   document.querySelector('button.MuiButton-root:nth-child(1)').classList.add('inactive-color-module-shadow'); 
   document.querySelector('button.MuiButtonBase-root:nth-child(2)').classList.remove('inactive-color-module-shadow'); 
   document.querySelector('button.MuiButton-root:nth-child(1)').classList.remove('active-color-module-highlight'); 
   document.querySelector('button.MuiButtonBase-root:nth-child(2)').classList.add('active-color-module-highlight'); 
+  document.querySelector('.react-draggable').style.setProperty('--colorpicker-box-height', document.querySelector('#fgcolor').clientHeight+'px');
+  document.querySelector('.react-draggable').style.setProperty('--colorpicker-box-width', document.querySelector('#fgcolor').clientWidth+'px');
 };
 
 const showbgcolor = event => {
@@ -118,6 +116,7 @@ setTimeout(() => (
   document.querySelector('#fgcolor').classList.remove('on'), 
   document.querySelector('#fg-picker').classList.remove('on'), 
   document.querySelector('#bg-picker').classList.remove('on'),
+  document.querySelector('#draggable-area').classList.remove('on'),
   document.querySelector('#fg-picker').classList.remove('mini'),
   document.querySelector('#fg-picker').classList.remove('full'),
   document.querySelector('#bg-picker').classList.remove('mini'),
@@ -130,18 +129,26 @@ const scaleColorModule = event => {
   document.querySelector('#fg-picker').classList.toggle('full'),
   document.querySelector('#bg-picker').classList.toggle('mini'),
   document.querySelector('#bg-picker').classList.toggle('full')
+
+  if (document.querySelector('#fg-picker').classList.contains('mini')) {
+    document.querySelector('.react-draggable').style.setProperty('--colorpicker-box-height', '430px');
+    } 
+    else if (document.querySelector('#fg-picker').classList.contains('full')) {
+      document.querySelector('.react-draggable').style.setProperty('--colorpicker-box-height', '573px');
+    } 
+
   if (document.querySelector('#fg-picker').classList.contains('on')) { 
      document.querySelector('#fg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.add('hide');
      setTimeout(() => (
       document.querySelector('#fg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.remove('hide')
     ), 100);
-    }
+  }
   else if (document.querySelector('#bg-picker').classList.contains('on')) { 
       document.querySelector('#bg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.add('hide');
       setTimeout(() => (
        document.querySelector('#bg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.remove('hide')
      ), 100);
-     }
+    }
 };
 
 
@@ -206,6 +213,7 @@ const resizeColorModuleButton = [
     ];
   
   return (
+
     <ThemeProvider theme={theme}>
     <Container maxWidth="unset"
     sx={{              
@@ -331,11 +339,11 @@ const resizeColorModuleButton = [
 
 </Box>     
 
-<Box>  
+<Box id="draggable-area" sx={{width:innerWidth, height:innerHeight, position:'absolute', margin: 0, top: 0, left: 0}}>  
 
 <Draggable 
-axis="both" handle=".on" cancel='#fgcolor::after'
-><Box sx={{}}>
+axis="both" handle=".react-draggable" cancel="#fgcolor" bounds='parent'
+><Box sx={{padding:{xs: '1.5rem', sm: '1.25rem', md: '1rem', lg: '1.25vw', xl:'1vw',}}}>
 
 <Box id="fgcolor">  
  <Box id="color-module-container-border"> <Box id="color-module-container"  sx={{color: theme.palette.background.default }}>
