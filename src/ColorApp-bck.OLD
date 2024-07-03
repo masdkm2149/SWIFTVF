@@ -1,0 +1,229 @@
+import React, { useState } from "react";
+import { ColorPicker, ColorService, useColor } from "react-color-palette";
+import { Box }from '@mui/material';
+import "react-color-palette/css";
+import { suggestAAColorVariant, suggestAAAColorVariant, getContrast } from 'accessible-colors';
+import Tooltip from '@mui/material/Tooltip';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Draggable from 'react-draggable';
+import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
+import {createTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
+
+const ColorApp: React.FC = () => {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        
+        },
+      }),
+    [prefersDarkMode],
+  )
+  const [fgcolor, setfgColor] = useColor(theme.palette.text.primary);
+  const [bgcolor, setbgColor] = useColor(theme.palette.background.paper);
+
+  const hideMenu = event => {    
+    document.querySelector('#color-selection-menu-item').classList.add('hide'),
+    document.querySelector('#close-menu-button-container').classList.add('hide'),
+    setTimeout(() => (
+    document.querySelector('#hamburger').classList.remove('hide')  
+  ), 100);  
+  setTimeout(() => (
+    document.querySelector('#close-menu-button-container').classList.remove('undisplay')
+  ), 0);  
+  };
+  {document.body.style = 'background-color:'+bgcolor.hex}
+  {
+    if (document.querySelector('#Text')) {
+    document.querySelector('#Text').style.setProperty('color', fgcolor.hex)}
+  }
+
+  const showfgcolor = event => {    
+    hideMenu();
+     if (document.querySelector('#fgcolor').classList.contains('on')) {}
+    else { 
+      if (innerWidth > 500) {
+        document.querySelector('#fg-picker').classList.remove('mini');
+        document.querySelector('#fg-picker').classList.add('full');      
+        document.querySelector('#bg-picker').classList.remove('mini');
+        document.querySelector('#bg-picker').classList.add('full');
+      }
+      if (innerWidth < 500) {
+        document.querySelector('#fg-picker').classList.remove('full');
+        document.querySelector('#fg-picker').classList.add('mini');
+        document.querySelector('#bg-picker').classList.remove('full');
+        document.querySelector('#bg-picker').classList.add('mini');
+     }
+      document.querySelector('#fgcolor').classList.add('slideup');
+      setTimeout(() => document.querySelector('#fgcolor').classList.remove('slideup'), 500);
+    }
+    document.querySelector('#draggable-area').classList.add('on'); document.querySelector('#fgcolor').classList.add('on'); document.querySelector('#fg-picker').classList.add('on');  
+    document.querySelector('#bg-picker').classList.remove('on');
+    document.querySelector('button.MuiButton-root:nth-child(1)').classList.add('inactive-color-module-shadow'); 
+    document.querySelector('button.MuiButtonBase-root:nth-child(2)').classList.remove('inactive-color-module-shadow'); 
+    document.querySelector('button.MuiButton-root:nth-child(1)').classList.remove('active-color-module-highlight'); 
+    document.querySelector('button.MuiButtonBase-root:nth-child(2)').classList.add('active-color-module-highlight'); 
+    document.querySelector('.react-draggable').style.setProperty('--colorpicker-box-height', document.querySelector('#fgcolor').clientHeight+'px');
+    document.querySelector('.react-draggable').style.setProperty('--colorpicker-box-width', document.querySelector('#fgcolor').clientWidth+'px');
+  };
+
+  const showbgcolor = event => {
+    document.querySelector('#bg-picker').classList.add('on'); 
+    document.querySelector('#fg-picker').classList.remove('on'); 
+    document.querySelector('button.MuiButton-root:nth-child(2)').classList.add('inactive-color-module-shadow'); 
+    document.querySelector('button.MuiButton-root:nth-child(2)').classList.remove('active-color-module-highlight'); 
+    document.querySelector('button.MuiButton-root:nth-child(1)').classList.remove('inactive-color-module-shadow'); 
+    document.querySelector('button.MuiButton-root:nth-child(1)').classList.add('active-color-module-highlight'); 
+  };
+
+  const closeColorModule = event => {  
+    document.querySelector('#fgcolor').classList.add('slidedown');
+  setTimeout(() => (
+    document.querySelector('#fgcolor').classList.remove('slidedown'),  
+    document.querySelector('#fgcolor').classList.remove('on'), 
+    document.querySelector('#fg-picker').classList.remove('on'), 
+    document.querySelector('#bg-picker').classList.remove('on'),
+    document.querySelector('#draggable-area').classList.remove('on'),
+    document.querySelector('#fg-picker').classList.remove('mini'),
+    document.querySelector('#fg-picker').classList.remove('full'),
+    document.querySelector('#bg-picker').classList.remove('mini'),
+    document.querySelector('#bg-picker').classList.remove('full')
+  ), 500);
+}
+  const scaleColorModule = event => {
+    document.querySelector('#fg-picker').classList.toggle('mini'),
+    document.querySelector('#fg-picker').classList.toggle('full'),
+    document.querySelector('#bg-picker').classList.toggle('mini'),
+    document.querySelector('#bg-picker').classList.toggle('full')
+  
+    if (document.querySelector('#fg-picker').classList.contains('mini')) {
+      document.querySelector('.react-draggable').style.setProperty('--colorpicker-box-height', '430px');
+      } 
+      else if (document.querySelector('#fg-picker').classList.contains('full')) {
+        document.querySelector('.react-draggable').style.setProperty('--colorpicker-box-height', '573px');
+      } 
+  
+    if (document.querySelector('#fg-picker').classList.contains('on')) { 
+       document.querySelector('#fg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.add('hide');
+       setTimeout(() => (
+        document.querySelector('#fg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.remove('hide')
+      ), 100);
+    }
+    else if (document.querySelector('#bg-picker').classList.contains('on')) { 
+        document.querySelector('#bg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.add('hide');
+        setTimeout(() => (
+         document.querySelector('#bg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.remove('hide')
+       ), 100);
+      }
+  };
+  
+
+  const [pickerWidth, setPickerWidth] = useState<number>(220); // Width of the ColorPicker box
+  const [pickerHeight, setPickerHeight] = useState<number>(160); // Height of the ColorPicker box
+  const resizeColorModuleButton = [
+    <Box onClick={scaleColorModule} id="resize-color-button"><Tooltip title="Shrink / Expand" arrow><IconButton><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 30" x="0px" y="0px"><path d="m19,4.25h-6c-.414,0-.75.336-.75.75s.336.75.75.75h4.189l-11.439,11.439v-4.189c0-.414-.336-.75-.75-.75s-.75.336-.75.75v6c0,.414.336.75.75.75h6c.414,0,.75-.336.75-.75s-.336-.75-.75-.75h-4.189l11.439-11.439v4.189c0,.414.336.75.75.75s.75-.336.75-.75v-6c0-.414-.336-.75-.75-.75Z"/></svg></IconButton></Tooltip></Box>,
+  ]
+    const buttons = [
+      <Button onClick={showbgcolor} key="one"><ImageOutlinedIcon/>Background</Button>,
+      <Button onClick={showfgcolor} key="two"><FormatColorTextIcon/>Text</Button>,
+    ];
+
+    function useSuggestedAA() {
+      if (document.querySelector('#fg-picker')?.classList.contains('on')) {
+        useSuggestedAAfg();
+      } else if (document.querySelector('#bg-picker')?.classList.contains('on')) {
+        useSuggestedAAbg();
+      }
+    }
+    
+
+    function useSuggestedAAfg() {
+      setfgColor(ColorService.convert("hex", suggestAAColorVariant(fgcolor.hex, bgcolor.hex, true)));
+      document.querySelector('#Text')?.style.setProperty('color', suggestAAColorVariant(fgcolor.hex, bgcolor.hex, true));
+    }
+    function useSuggestedAAbg() {
+      setbgColor(ColorService.convert("hex", suggestAAColorVariant(bgcolor.hex, fgcolor.hex, true)));
+      document.body.style.backgroundColor = suggestAAColorVariant(bgcolor.hex, fgcolor.hex, true);
+    }
+    const compliantcolorsuggestion = [
+      <Box id="compliant-color-suggestion" sx={{background: ''}}></Box>,
+      <Box id="reject-compliant-color-suggestion"><Tooltip title="Reject/Close" arrow><IconButton><CancelRoundedIcon sx={{width: '2.25rem', height: '2.25rem'}} /></IconButton></Tooltip></Box>,
+      <Box id="accept-compliant-color-suggestion"><Tooltip title="Accept/Use" arrow><IconButton onClick={useSuggestedAA} ><CheckCircleRoundedIcon sx={{width: '2.25rem', height: '2.25rem'}} /></IconButton></Tooltip>
+      </Box>
+    ];   
+    
+    const lowcontrastwarningmodule = [  
+
+      <div id="contrast-warning">
+      <Box sx={{    right: '3.5rem', position: 'absolute', top: '.5rem', padding: '1rem'}}><ErrorOutlineOutlinedIcon sx={{width: '2.25rem', height: '2.25rem'}} /></Box>
+        <Box sx={{    right: '0rem', position: 'absolute', top: 0, padding: '1rem'}}><IconButton><RemoveRoundedIcon sx={{width: '2.25rem', height: '2.25rem'}} /></IconButton></Box>
+      <div><h3 id="contrast-warning-text">Attention: Low Contrast</h3></div><div id="asjk158"><p id="contrast-warning-text">The current <Tooltip title="Contrast Ratio measures the relative luminance between a background over which the text is rendered. The values can range from 1 to 21 (commonly written 1:1 to 21:1)."><span id="low-context-ratio-value"
+  ><a href='https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html#top'>contrast ratio</a></span></Tooltip> of {getContrast(bgcolor.hex, fgcolor.hex)} is below the recommended level.</p>
+  <p id="contrast-warning-text">A contrast ratio greater than 3 (AA) is recommended by WCAG for optimal readability.</p><p id="contrast-warning-text">You can also choose to select the nearest compliant color:</p><div><Box sx={{display:'flex'}}>
+    
+  <p id="suggested-color-text">Suggested Color:</p>
+  {compliantcolorsuggestion}
+</Box>
+  </div></div></div>
+  
+    ];
+    
+
+    {
+    if (document.querySelector('.MuiSlider-root')) { 
+    for (let i = 0; i < document.querySelectorAll('.MuiSlider-root').length; i++) 
+      {
+        document.querySelector(':root').style.setProperty('color', suggestAAColorVariant(fgcolor.hex, bgcolor.hex, true))
+  document.documentElement.style.setProperty('--color-module-bordercolor-AA', suggestAAColorVariant(getComputedStyle(document.documentElement).getPropertyValue('--color-module-bordercolor'), bgcolor.hex, true))
+document.documentElement.style.setProperty('--color-module-bordercolor-hover-AA', suggestAAColorVariant(getComputedStyle(document.documentElement).getPropertyValue('--color-module-bordercolor-hover'), bgcolor.hex, true))
+document.querySelector(':root').style.setProperty('--active-button-state-color-AAA', suggestAAAColorVariant(getComputedStyle(document.documentElement).getPropertyValue('--active-button-state-color'), bgcolor.hex, true))
+document.querySelectorAll('.MuiSlider-root')[i].style = 'color:'+suggestAAColorVariant(fgcolor.hex, bgcolor.hex, true)}
+  }
+}
+
+  return (
+  
+  <div id="color-picker-module">   {lowcontrastwarningmodule} 
+    <Box id="draggable-area" sx={{width:innerWidth, height:innerHeight, position:'absolute', margin: 0, top: 0, left: 0}}>  
+<Draggable 
+axis="both" handle=".react-draggable" cancel="#fgcolor" bounds='parent'
+><Box sx={{padding:{xs: '1.5rem', sm: '1.25rem', md: '1rem', lg: '1.25vw', xl:'1vw',}}}>
+
+<div id="fgcolor">  
+ <div id="color-module-container-border"> <div id="color-module-container">
+  
+<p id="color-picker-header">Color Picker</p>
+   <div>       <ButtonGroup sx={{flexDirection:'row'}} 
+        disableElevation
+        orientation="vertical"
+        aria-label="Vertical button group"
+        variant="text"
+      >
+        {buttons}
+      </ButtonGroup>
+
+       </div><div id="fg-picker">
+       <ColorPicker color={fgcolor} width={pickerWidth} height={pickerHeight} onChange={setfgColor}  />  
+       </div>
+       <div id="bg-picker">
+       <ColorPicker color={bgcolor} width={pickerWidth} height={pickerHeight}  onChange={setbgColor}  />  
+       </div>
+       
+ {resizeColorModuleButton}       
+ <div onClick={closeColorModule} id="close-color-button"><Tooltip title="Exit" arrow><IconButton><CancelRoundedIcon sx={{width: '2.25rem', height: '2.25rem'}} /></IconButton></Tooltip></div>
+</div></div></div>
+</Box></Draggable></Box></div>
+  );
+};
+export default ColorApp;

@@ -1,26 +1,64 @@
 import * as React from 'react';
-import { Box, Container, formLabelClasses }from '@mui/material';
+import { Box, Container }from '@mui/material';
 import Slider from '@mui/material/Slider';
-import SWIFT from './assets/fonts/SWIFTVF.ttf';
 //import { AutoTextSize } from "auto-text-size";//
 import { useState } from "react";
-import Draggable from 'react-draggable'; // The default
-import { ColorPicker, Saturation, Hue, Alpha, useColor } from "react-color-palette";
-import { getRandomAAColor } from 'accessible-colors';
 import "react-color-palette/css";
-import { suggestAAColorVariant, suggestAAAColorVariant } from 'accessible-colors';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import ColorizeIcon from '@mui/icons-material/Colorize';
 import Tooltip from '@mui/material/Tooltip';
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+// CUSTOM APPS & COMPONENTS
+import ColorApp from "./ColorApp"
+import ContentEditableComponent from './ContentEditableComponent';
+
+// ICONS
+import ColorizeIcon from '@mui/icons-material/Colorize';
 import IconButton from '@mui/material/IconButton';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
 import CloseIcon from '@mui/icons-material/Close';
-import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
+// END IMPORTS
+
+function hideMenu() {    
+  document.querySelector('#color-selection-menu-item')?.classList.add('hide'),
+  document.querySelector('#close-menu-button-container')?.classList.add('hide'),
+  setTimeout(() => (
+  document.querySelector('#hamburger')?.classList.remove('hide')  
+), 100);  
+setTimeout(() => (
+  document.querySelector('#close-menu-button-container')?.classList.remove('undisplay')
+), 0);  
+};
+
+export function showfgcolor() {    
+  hideMenu();
+   if (document.querySelector('#fgcolor')?.classList.contains('on')) {}
+  else { 
+    if (innerWidth > 500) {
+      document.querySelector('#fg-picker')?.classList.remove('mini');
+      document.querySelector('#fg-picker')?.classList.add('full');      
+      document.querySelector('#bg-picker')?.classList.remove('mini');
+      document.querySelector('#bg-picker')?.classList.add('full');
+    }
+    if (innerWidth < 500) {
+      document.querySelector('#fg-picker')?.classList.remove('full');
+      document.querySelector('#fg-picker')?.classList.add('mini');
+      document.querySelector('#bg-picker')?.classList.remove('full');
+      document.querySelector('#bg-picker')?.classList.add('mini');
+   }
+    document.querySelector('#fgcolor')?.classList.add('slideup');
+    setTimeout(() => document.querySelector('#fgcolor')?.classList.remove('slideup'), 500);
+  }
+  document.querySelector('#draggable-area')?.classList.add('on'); document.querySelector('#fgcolor')?.classList.add('on'); document.querySelector('#fg-picker')?.classList.add('on');  
+  document.querySelector('#bg-picker')?.classList.remove('on');
+  document.querySelector('button.MuiButton-root:nth-child(1)')?.classList.add('inactive-color-module-shadow'); 
+  document.querySelector('button.MuiButtonBase-root:nth-child(2)')?.classList.remove('inactive-color-module-shadow'); 
+  document.querySelector('button.MuiButton-root:nth-child(1)')?.classList.remove('active-color-module-highlight'); 
+  document.querySelector('button.MuiButtonBase-root:nth-child(2)')?.classList.add('active-color-module-highlight'); 
+  (document.querySelector('.react-draggable#color-picker-app') as HTMLElement).style.setProperty('--colorpicker-box-height', document.querySelector('#fgcolor')?.clientHeight+'px');
+  (document.querySelector('.react-draggable#color-picker-app') as HTMLElement).style.setProperty('--colorpicker-box-width', document.querySelector('#fgcolor')?.clientWidth+'px');
+};
+
 export default function SliderSizes() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
@@ -35,167 +73,42 @@ export default function SliderSizes() {
     [prefersDarkMode],
   );
 
+const [squiValue, setSquiValue] = useState<number>(0); // Example with number state
+const [slntValue, setSlntValue] = useState<number>(450); // Example with number state
+const [swghValue, setSwghValue] = useState<number>(450); // Example with number state
+const [twghValue, setTwghValue] = useState<number>(900); // Example with number state
+let [text] = useState("SWIFT");
 
-const loadmenu = event => {    
-  if (document.querySelector('#hamburger-box')) {
-  document.querySelector('#hamburger-box').classList.remove('hide') 
-}
-};
-  
-  const [squi, squiValue] = React.useState(0);
-  const [slnt, slntValue] = React.useState(450);
-  const [swgh, swghValue] = React.useState(450);
-  const [twgh, twghValue] = React.useState(900);
-  const [text, setText] = useState("SWIFT");
-  var breakpointinputs = useState(["false"]);
-
-  const [fgcolor, setfgColor] = useColor(theme.palette.text.primary);
-  const compfgColor = (fgcolor.hex);
-  const [bgcolor, setbgColor] = useColor(theme.palette.background.paper);
-  const compbgColor = (bgcolor.hex);
-
-  {document.body.style = 'background-color:'+compbgColor}
-
-var testing = innerWidth -333;
-
-  {
-    if (document.querySelector('.MuiSlider-root')) { 
-    for (let i = 0; i < document.querySelectorAll('.MuiSlider-root').length; i++) 
-      {
-        document.querySelector(':root').style.setProperty('color', suggestAAColorVariant(fgcolor.hex, bgcolor.hex, true))
-document.documentElement.style.setProperty('--color-module-bordercolor-AA', suggestAAColorVariant(getComputedStyle(document.documentElement).getPropertyValue('--color-module-bordercolor'), bgcolor.hex, true))
-document.documentElement.style.setProperty('--color-module-bordercolor-hover-AA', suggestAAColorVariant(getComputedStyle(document.documentElement).getPropertyValue('--color-module-bordercolor-hover'), bgcolor.hex, true))
-document.querySelector(':root').style.setProperty('--active-button-state-color-AAA', suggestAAAColorVariant(getComputedStyle(document.documentElement).getPropertyValue('--active-button-state-color'), bgcolor.hex, true))
-document.querySelectorAll('.MuiSlider-root')[i].style = 'color:'+suggestAAColorVariant(fgcolor.hex, bgcolor.hex, true)}
-  }
-}
-
-
-const showfgcolor = event => {    
-  hideMenu();
-   if (document.querySelector('#fgcolor').classList.contains('on')) {}
-  else { 
-    if (innerWidth > 500) {
-      document.querySelector('#fg-picker').classList.remove('mini');
-      document.querySelector('#fg-picker').classList.add('full');      
-      document.querySelector('#bg-picker').classList.remove('mini');
-      document.querySelector('#bg-picker').classList.add('full');
-    }
-    if (innerWidth < 500) {
-      document.querySelector('#fg-picker').classList.remove('full');
-      document.querySelector('#fg-picker').classList.add('mini');
-      document.querySelector('#bg-picker').classList.remove('full');
-      document.querySelector('#bg-picker').classList.add('mini');
-   }
-    document.querySelector('#fgcolor').classList.add('slideup');
-    setTimeout(() => document.querySelector('#fgcolor').classList.remove('slideup'), 500);
-  }
-  document.querySelector('#draggable-area').classList.add('on'); document.querySelector('#fgcolor').classList.add('on'); document.querySelector('#fg-picker').classList.add('on');  
-  document.querySelector('#bg-picker').classList.remove('on');
-  document.querySelector('button.MuiButton-root:nth-child(1)').classList.add('inactive-color-module-shadow'); 
-  document.querySelector('button.MuiButtonBase-root:nth-child(2)').classList.remove('inactive-color-module-shadow'); 
-  document.querySelector('button.MuiButton-root:nth-child(1)').classList.remove('active-color-module-highlight'); 
-  document.querySelector('button.MuiButtonBase-root:nth-child(2)').classList.add('active-color-module-highlight'); 
-  document.querySelector('.react-draggable').style.setProperty('--colorpicker-box-height', document.querySelector('#fgcolor').clientHeight+'px');
-  document.querySelector('.react-draggable').style.setProperty('--colorpicker-box-width', document.querySelector('#fgcolor').clientWidth+'px');
-};
-
-const showbgcolor = event => {
-  document.querySelector('#bg-picker').classList.add('on'); 
-  document.querySelector('#fg-picker').classList.remove('on'); 
-  document.querySelector('button.MuiButton-root:nth-child(2)').classList.add('inactive-color-module-shadow'); 
-  document.querySelector('button.MuiButton-root:nth-child(2)').classList.remove('active-color-module-highlight'); 
-  document.querySelector('button.MuiButton-root:nth-child(1)').classList.remove('inactive-color-module-shadow'); 
-  document.querySelector('button.MuiButton-root:nth-child(1)').classList.add('active-color-module-highlight'); 
-};
-
-const closeColorModule = event => {  
-  document.querySelector('#fgcolor').classList.add('slidedown');
-setTimeout(() => (
-  document.querySelector('#fgcolor').classList.remove('slidedown'),  
-  document.querySelector('#fgcolor').classList.remove('on'), 
-  document.querySelector('#fg-picker').classList.remove('on'), 
-  document.querySelector('#bg-picker').classList.remove('on'),
-  document.querySelector('#draggable-area').classList.remove('on'),
-  document.querySelector('#fg-picker').classList.remove('mini'),
-  document.querySelector('#fg-picker').classList.remove('full'),
-  document.querySelector('#bg-picker').classList.remove('mini'),
-  document.querySelector('#bg-picker').classList.remove('full')
-), 500);
-
-};
-const scaleColorModule = event => {
-  document.querySelector('#fg-picker').classList.toggle('mini'),
-  document.querySelector('#fg-picker').classList.toggle('full'),
-  document.querySelector('#bg-picker').classList.toggle('mini'),
-  document.querySelector('#bg-picker').classList.toggle('full')
-
-  if (document.querySelector('#fg-picker').classList.contains('mini')) {
-    document.querySelector('.react-draggable').style.setProperty('--colorpicker-box-height', '430px');
-    } 
-    else if (document.querySelector('#fg-picker').classList.contains('full')) {
-      document.querySelector('.react-draggable').style.setProperty('--colorpicker-box-height', '573px');
-    } 
-
-  if (document.querySelector('#fg-picker').classList.contains('on')) { 
-     document.querySelector('#fg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.add('hide');
-     setTimeout(() => (
-      document.querySelector('#fg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.remove('hide')
-    ), 100);
-  }
-  else if (document.querySelector('#bg-picker').classList.contains('on')) { 
-      document.querySelector('#bg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.add('hide');
-      setTimeout(() => (
-       document.querySelector('#bg-picker > div:nth-child(2) > div:nth-child(2) > section:nth-child(2)').classList.remove('hide')
-     ), 100);
-    }
-};
-
-const hideMenu = event => {    
-  document.querySelector('#color-selection-menu-item').classList.add('hide'),
-  document.querySelector('#close-menu-button-container').classList.add('hide'),
-  setTimeout(() => (
-  document.querySelector('#hamburger').classList.remove('hide')  
-), 100);  
-setTimeout(() => (
-  document.querySelector('#close-menu-button-container').classList.remove('undisplay')
-), 0);  
-};
-
-const showMenu = event => {    
-    document.querySelector('#color-selection-menu-item').classList.remove('hide'),
-    document.querySelector('#hamburger').classList.add('hide'),
+function showMenu() {    
+    document.querySelector('#color-selection-menu-item')?.classList.remove('hide'),
+    document.querySelector('#hamburger')?.classList.add('hide'),
     setTimeout(() => (
-    document.querySelector('#close-menu-button-container').classList.remove('hide')
+    document.querySelector('#close-menu-button-container')?.classList.remove('hide')
   ), 100);  
   setTimeout(() => (
-    document.querySelector('#close-menu-button-container').classList.add('undisplay')
+    document.querySelector('#close-menu-button-container')?.classList.add('undisplay')
   ), 275);  
   };
 
-  const handleChange = (event, newValue) => {
-    squiValue(newValue);    
-  };
-  const handleChange1 = (event, newValue) => {
-    slntValue(newValue);    
-  };
-  const handleChange2 = (event, newValue) => {
-    swghValue(newValue);    
-  };
-  const handleChange3 = (event, newValue) => {
-    twghValue(newValue);    
+  const handleChangeSqui = (_event: Event, newValue: number | number[]) => {
+    setSquiValue(newValue as number);
   };
   
-const resizeColorModuleButton = [
-  <Box onClick={scaleColorModule} id="resize-color-button"><Tooltip title="Shrink / Expand" arrow><IconButton><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 30" x="0px" y="0px"><path d="m19,4.25h-6c-.414,0-.75.336-.75.75s.336.75.75.75h4.189l-11.439,11.439v-4.189c0-.414-.336-.75-.75-.75s-.75.336-.75.75v6c0,.414.336.75.75.75h6c.414,0,.75-.336.75-.75s-.336-.75-.75-.75h-4.189l11.439-11.439v4.189c0,.414.336.75.75.75s.75-.336.75-.75v-6c0-.414-.336-.75-.75-.75Z"/></svg></IconButton></Tooltip></Box>,
-]
-  const buttons = [
-    <Button onClick={showbgcolor} key="one"><ImageOutlinedIcon/>Background</Button>,
-    <Button onClick={showfgcolor} key="two"><FormatColorTextIcon/>Text</Button>,
-  ];
+  const handleChangeSlnt = (_event: Event, newValue: number | number[]) => {
+    setSlntValue(newValue as number); // Update slntValue state with a number
+  };
+  
+  const handleChangeSwgh = (_event: Event, newValue: number | number[]) => {
+    setSwghValue(newValue as number); // Update swghValue state with a number
+  };
+  
+  const handleChangeTwgh = (_event: Event, newValue: number | number[]) => {
+    setTwghValue(newValue as number); // Update twghValue state with a number
+  };
+
 
   const navOptions = [
-    <Box id="color-selection-menu-item" class="hide" onClick={showfgcolor} sx={{
+    <Box key="color-selection-menu-item" id="color-selection-menu-item" className="hide" onClick={showfgcolor} sx={{
       cursor: 'Pointer', 
       width: 'fit-content',
       height: 24,
@@ -208,36 +121,97 @@ const resizeColorModuleButton = [
         <IconButton><ColorizeIcon /></IconButton></Tooltip>
         </Box>
     ];
-  
+
+// Inside your functional component
+const matchesXs = useMediaQuery(theme.breakpoints.only('xs'));
+const matchesSm = useMediaQuery(theme.breakpoints.only('sm'));
+const matchesMd = useMediaQuery(theme.breakpoints.only('md'));
+const matchesLg = useMediaQuery(theme.breakpoints.only('lg'));
+const matchesXl = useMediaQuery(theme.breakpoints.only('xl'));
+
+const fontSize = {
+  xs: '40vw',
+  sm: '38vw',
+  md: '35vw',
+  lg: '35vw',
+  xl: '25vw',
+};
+
+const getFontSize = () => {
+  if (matchesXs) return fontSize.xs;
+  if (matchesSm) return fontSize.sm;
+  if (matchesMd) return fontSize.md;
+  if (matchesLg) return fontSize.lg;
+  return fontSize.xl; // fallback for xl and larger
+};
+
+// Constants for base translation and adjustments
+const baseTranslation = 1.5; // Starting translateX percentage at slntValue = 0
+const maxTranslation = -3.75; // Ending translateX percentage at slntValue = 900
+const squiImpactAtZeroSlnt = 0; // Impact of squiValue when slntValue = 0
+const squiImpactAtMaxSlnt = 1; // Impact of squiValue when slntValue = 900
+
+// New constants for swghValue impact
+const swghImpactAtZero = 0; // Impact of swghValue when swghValue = 0
+const swghImpactAtMax = -1; // Impact of swghValue when swghValue = 900
+
+// Calculate translateX percentage based on slntValue, squiValue, and swghValue
+let translateXPercentage: number;
+
+if (slntValue === 0) {
+  // Interpolate based on squiValue impact only
+  translateXPercentage = baseTranslation + (squiValue / 900) * squiImpactAtZeroSlnt;
+} else if (slntValue === 900) {
+  // Interpolate based on squiValue and swghValue impacts
+  const squiImpact = (squiValue / 900) * squiImpactAtMaxSlnt;
+  const swghImpact = (swghValue / 900) * swghImpactAtMax;
+  translateXPercentage = maxTranslation + squiImpact + swghImpact;
+} else {
+  // Interpolate translateXPercentage based on slntValue, squiValue, and swghValue
+  const slntFactor = slntValue / 900;
+  const squiFactor = squiValue / 900;
+  const swghFactor = swghValue / 900;
+
+  // Smooth interpolation using a combination of slntValue, squiValue, and swghValue impacts
+  translateXPercentage =
+    baseTranslation * (1 - slntFactor) +
+    maxTranslation * slntFactor +
+    (squiFactor * (squiImpactAtZeroSlnt + (squiImpactAtMaxSlnt - squiImpactAtZeroSlnt) * slntFactor)) +
+    (swghFactor * (swghImpactAtZero + (swghImpactAtMax - swghImpactAtZero) * slntFactor));
+}
+
+// Adjust for special cases
+if (slntValue === 900 && squiValue === 900) {
+  if (swghValue === 900) {
+    translateXPercentage = -4.75; // Special case when all values are at their maximum
+  } else if (swghValue === 0) {
+    translateXPercentage = -1; // Special case when squiValue and slntValue are maximum, but swghValue is minimum
+  }
+}
+
+// "for debugging" console.log("TranslateX Percentage:", translateXPercentage);
+
+
   return (
 
     <ThemeProvider theme={theme}>
-    <Container maxWidth="unset"
+ 
+    <Container
     sx={{              
       padding: '0 clamp(32px, 10%, 160px)!important',
       lineBreak: 'anywhere',
       margin: 0,
       flex: 1,
            }}>   
-            <Box  sx={{
-              fontFamily: 'SWIFT',
-              textAlign: 'center',
-              color: compfgColor,
-              fontSize: {xs: '40vw', sm: '38vw', md: '35vw', lg: '35vw', xl:'25vw',},
-              lineHeight: .6,
-              fontVariationSettings: "'squi'"+squi+"," + "'swgh'"+swgh+"," +  "'twgh'"+twgh+"," +  "'slnt'"+slnt,
-            }} >  
-
-            
-           <Box id="hamburger-box" sx={{display: 'contents'}}>    
-           
-           <IconButton id="hamburger" onClick={showMenu} ><MenuRoundedIcon  sx={{ cursor: 'Pointer' }}  fontSize="large"/>
-           </IconButton>   
-           {navOptions} 
-               
-                </Box>  
-                <Box id="close-menu-button-container" class="hide">
-                <Tooltip slotProps={{
+<Box id="hamburger-box" sx={{ display: 'contents' }}>
+    <IconButton id="hamburger" onClick={showMenu}>
+      <MenuRoundedIcon sx={{ cursor: 'Pointer' }} fontSize="large" />
+    </IconButton>
+    {navOptions}
+  </Box>
+  <Box id="close-menu-button-container" className="hide">
+    <Tooltip
+      slotProps={{
         popper: {
           modifiers: [
             {
@@ -248,35 +222,62 @@ const resizeColorModuleButton = [
             },
           ],
         },
-      }} title="Exit" arrow><IconButton id="close-menu-button" onClick={hideMenu}><CloseIcon  sx={{ cursor: 'Pointer' }}  fontSize="large"/>
-    </IconButton></Tooltip></Box>
-            <span id="Text" spellCheck="false" contentEditable="true"> {text} </span>      
-      </Box>
+      }}
+      title="Exit"
+      arrow
+    >
+      <IconButton id="close-menu-button" onClick={hideMenu}>
+        <CloseIcon sx={{ cursor: 'Pointer' }} fontSize="large" />
+      </IconButton>
+    </Tooltip>
+  </Box>
+<div
+  style={{
+    fontFamily: 'SWIFT',
+    textAlign: 'center',
+    fontSize: getFontSize(),
+    lineHeight: 0.6,
+    fontVariationSettings:
+      `'squi' ${squiValue}, ` +
+      `'swgh' ${swghValue}, ` +
+      `'twgh' ${twghValue}, ` +
+      `'slnt' ${slntValue}`,
+      fontStyle: slntValue === 900 ? 'italic' : 'normal', // Adjust based on slntValue
+
+        // Centering adjustment for italic or slanted text
+        transform: `translateX(${translateXPercentage}%)`,
+  }}
+>
+  <ContentEditableComponent id="Text" spellCheck={false} text={text} />
+</div>
 
 <Box sx={{
   flex: 1,
-  padding: {xs: '0 20%', sm: '0 10%', md: '0 15%'},
+  margin: 'auto',
+  paddingRight: '10px', // Offset width for slider circle handle
+  maxWidth: '50vw',
    }}>
 
 
 
-    <Box sx={{
-      flex: 1,
-      display: 'flex',
+    <Box 
+      sx={{
+        flex: 1,
+        display: 'flex',
        }}>
-          <p id="slidernamepadding">
-              Squash:</p>
-           <Slider 
-           color={fgcolor.hex}
-      defaultValue={0}   
-      squi={squi}
-       onChange={handleChange} 
-      min={0}
-      max={900} 
-      aria-label="Default" 
-      valueLabelDisplay="auto" sx={{
-        margin: 'auto',
-      }} />
+      <p id="slidernamepadding">Squash:</p>
+      <Slider 
+        defaultValue={0}   
+        value={squiValue}
+        onChange={handleChangeSqui} 
+        min={0}
+        max={900} 
+        aria-label="Squash" 
+        valueLabelDisplay="auto"
+        sx={{
+          margin: 'auto',
+        }} 
+      />
    </Box>      
 
 
@@ -289,8 +290,8 @@ const resizeColorModuleButton = [
        <Slider
 
   defaultValue={450}   
-  slnt={slnt}
-   onChange={handleChange1} 
+  value={slntValue}
+   onChange={handleChangeSlnt} 
   min={0}
   max={900} 
   aria-label="Default" 
@@ -306,8 +307,8 @@ const resizeColorModuleButton = [
        <Slider
        
   defaultValue={450}   
-  swgh={swgh}
-   onChange={handleChange2} 
+  value={swghValue}
+   onChange={handleChangeSwgh} 
   min={0}
   max={900} 
   aria-label="Default" 
@@ -324,8 +325,8 @@ const resizeColorModuleButton = [
        <Slider
        
   defaultValue={900}   
-  twgh={twgh}
-   onChange={handleChange3} 
+  value={twghValue}
+   onChange={handleChangeTwgh} 
   min={0}
   max={900} 
   aria-label="Default" 
@@ -336,36 +337,7 @@ const resizeColorModuleButton = [
 
 </Box>     
 
-<Box id="draggable-area" sx={{width:innerWidth, height:innerHeight, position:'absolute', margin: 0, top: 0, left: 0}}>  
-
-<Draggable 
-axis="both" handle=".react-draggable" cancel="#fgcolor" bounds='parent'
-><Box sx={{padding:{xs: '1.5rem', sm: '1.25rem', md: '1rem', lg: '1.25vw', xl:'1vw',}}}>
-
-<Box id="fgcolor">  
- <Box id="color-module-container-border"> <Box id="color-module-container"  sx={{color: theme.palette.background.default }}>
-  
-<p id="color-picker-header">Color Picker</p>
-   <Box>       <ButtonGroup sx={{flexDirection:'row'}} 
-        disableElevation
-        orientation="vertical"
-        aria-label="Vertical button group"
-        variant="text"
-      >
-        {buttons}
-      </ButtonGroup>
-
-       </Box><Box id="fg-picker">
-       <Saturation  height={160} color={fgcolor} onChange={setfgColor}   />
-       <ColorPicker color={fgcolor} onChange={setfgColor}  />  </Box>
-       <Box id="bg-picker">
-       <Saturation  height={160} color={bgcolor} onChange={setbgColor}   />
-       <ColorPicker color={bgcolor} onChange={setbgColor}  />  </Box>
-       
- {resizeColorModuleButton}       
- <Box onClick={closeColorModule} id="close-color-button"><Tooltip title="Exit" arrow><IconButton><CancelRoundedIcon sx={{width: '2.25rem', height: '2.25rem'}} /></IconButton></Tooltip></Box>
-</Box></Box></Box>
-</Box></Draggable></Box>
+<ColorApp />
 </Container> 
 </ThemeProvider>
   );  
