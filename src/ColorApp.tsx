@@ -167,8 +167,8 @@ const [pickerHeight] = useState<number>(160); // Height of the ColorPicker box
     const disablePointerEvents = () => { (document.querySelector('#color-picker-warning') as HTMLElement).style.setProperty('pointer-events', 'none') };
 
     const handleContrastChange = debounce(() => {
-      // Check if .rcp-saturation is active
-      const rcpSaturationActive = document.querySelector('.rcp-saturation:active');
+      // Check if any of the color picker's interactive fields are still active
+      const rcpElementsActive = document.querySelector('.rcp-saturation:active, .rcp-hue.cursor:active, .rcp-alpha:active');
 
       // Checks for foreground color with alpha channel (9 characters; 8 digit hexadecimal plus '#')  Ex. '#12345678'
       const contrastWarningElement = document.querySelector('#contrast-warning'); // Alert module for contrast accessibility handling
@@ -192,7 +192,7 @@ const [pickerHeight] = useState<number>(160); // Height of the ColorPicker box
             }, 500);
           }
         }
-        else if (!rcpSaturationActive) {
+        else if (!rcpElementsActive) {  // None of the specified elements are active, proceed with contrast change logic
           if (contrastRatio && contrastRatio < 3 && !isAnimatingRef.current) { // Opens alert module when contrast below 3:1
             if (contrastWarningElement.classList.contains('hide')) {
               isAnimatingRef.current = true; // Set the flag to true to indicate animation
