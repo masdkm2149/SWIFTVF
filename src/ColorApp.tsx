@@ -164,34 +164,33 @@ const [pickerHeight] = useState<number>(160); // Height of the ColorPicker box
     const suggestedAAAFgColor = suggestAAAColorVariant(fgHex, bgHex, true);
     const sanitizedAAAFgColor = suggestedAAAFgColor ? suggestedAAAFgColor.replace('NaN', '') : '';
 
-  const handleContrastChange = debounce(() => {
+    const disablePointerEvents = () => { (document.querySelector('#color-picker-warning') as HTMLElement).style.setProperty('pointer-events', 'none') };
+
+    const handleContrastChange = debounce(() => {
     
-    // Checks for foreground color with alpha channel (9 characters; 8 digit hexadecimal plus '#')  Ex. '#12345678'
-    const contrastWarningElement = document.querySelector('#contrast-warning'); // Alert module for contrast accessibility handling
+      // Checks for foreground color with alpha channel (9 characters; 8 digit hexadecimal plus '#')  Ex. '#12345678'
+      const contrastWarningElement = document.querySelector('#contrast-warning'); // Alert module for contrast accessibility handling
     
-    if (contrastWarningElement) {   // Continue if contrast alert module exists
+      if (contrastWarningElement) {   // Continue if contrast alert module exists
+        const enablePointerEvents = () => { (document.querySelector('#color-picker-warning') as HTMLElement).style.setProperty('pointer-events', 'auto') };
 
-      const disablePointerEvents = () => { (document.querySelector('#color-picker-warning') as HTMLElement).style.setProperty('pointer-events', 'none') };
-
-      const enablePointerEvents = () => { (document.querySelector('#color-picker-warning') as HTMLElement).style.setProperty('pointer-events', 'auto') };
-
-      if (contrastRatio && contrastRatio >= 3 && !isAnimatingRef.current) {    // Continue if contrast is greater than 3 and not currently animating
-        disablePointerEvents(); // Disable pointer events for alert module in animated state
-  
-        if (contrastWarningElement.classList.contains('on')) {
-          isAnimatingRef.current = true;    // Set the flag to true to indicate intialized animation
-          contrastWarningElement.classList.add('slidedown');    // Begin exit animation (add class '.slidedown' to alert module)
+        if (contrastRatio && contrastRatio >= 3 && !isAnimatingRef.current) {    // Continue if contrast is greater than 3 and not currently animating
           disablePointerEvents(); // Disable pointer events for alert module in animated state
+  
+          if (contrastWarningElement.classList.contains('on')) {
+            isAnimatingRef.current = true;    // Set the flag to true to indicate intialized animation
+            contrastWarningElement.classList.add('slidedown');    // Begin exit animation (add class '.slidedown' to alert module)
+            disablePointerEvents(); // Disable pointer events for alert module in animated state
 
-          setTimeout(() => { // Wait duration of animation(500ms) before removing temporary classes      
-            contrastWarningElement.classList.remove('slidedown'); //Return to unanimated state 
-            contrastWarningElement.classList.remove('on'); // Return to inactive state
-            contrastWarningElement.classList.add('hide'); // Return to undisplayed state
-            isAnimatingRef.current = false; // Reset the flag after animation
-          }, 500);
-        }
+            setTimeout(() => { // Wait duration of animation(500ms) before removing temporary classes      
+              contrastWarningElement.classList.remove('slidedown'); //Return to unanimated state 
+              contrastWarningElement.classList.remove('on'); // Return to inactive state
+              contrastWarningElement.classList.add('hide'); // Return to undisplayed state
+             isAnimatingRef.current = false; // Reset the flag after animation
+            }, 500);
+          }
 
-      } else if (contrastRatio && contrastRatio < 3 && !isAnimatingRef.current) { // Opens alert module when contrast below 3:1
+        } else if (contrastRatio && contrastRatio < 3 && !isAnimatingRef.current) { // Opens alert module when contrast below 3:1
         
         if (contrastWarningElement.classList.contains('hide')) {
           isAnimatingRef.current = true; // Set the flag to true to indicate animation
@@ -257,6 +256,7 @@ function contrastWarningOff() {
 
     document.querySelector('#contrast-warning')?.classList.remove('on');
     if (document.querySelector('#contrast-warning:not(.hide)')) { 
+      disablePointerEvents();
       document.querySelector('#contrast-warning')?.classList.add('slidedown');}
       setTimeout(() => {
         document.querySelector('#contrast-warning')?.classList.remove('slidedown');
