@@ -167,7 +167,9 @@ const [pickerHeight] = useState<number>(160); // Height of the ColorPicker box
     const disablePointerEvents = () => { (document.querySelector('#color-picker-warning') as HTMLElement).style.setProperty('pointer-events', 'none') };
 
     const handleContrastChange = debounce(() => {
-    
+      // Check if .rcp-saturation is active
+      const rcpSaturationActive = document.querySelector('.rcp-saturation:active');
+
       // Checks for foreground color with alpha channel (9 characters; 8 digit hexadecimal plus '#')  Ex. '#12345678'
       const contrastWarningElement = document.querySelector('#contrast-warning'); // Alert module for contrast accessibility handling
     
@@ -181,34 +183,34 @@ const [pickerHeight] = useState<number>(160); // Height of the ColorPicker box
             isAnimatingRef.current = true;    // Set the flag to true to indicate intialized animation
             contrastWarningElement.classList.add('slidedown');    // Begin exit animation (add class '.slidedown' to alert module)
             disablePointerEvents(); // Disable pointer events for alert module in animated state
-
+            
             setTimeout(() => { // Wait duration of animation(500ms) before removing temporary classes      
               contrastWarningElement.classList.remove('slidedown'); //Return to unanimated state 
               contrastWarningElement.classList.remove('on'); // Return to inactive state
               contrastWarningElement.classList.add('hide'); // Return to undisplayed state
-             isAnimatingRef.current = false; // Reset the flag after animation
+              isAnimatingRef.current = false; // Reset the flag after animation
             }, 500);
           }
-
-        } else if (contrastRatio && contrastRatio < 3 && !isAnimatingRef.current) { // Opens alert module when contrast below 3:1
-        
-        if (contrastWarningElement.classList.contains('hide')) {
-          isAnimatingRef.current = true; // Set the flag to true to indicate animation
-          contrastWarningElement.classList.add('slideup');
-          contrastWarningElement.classList.remove('hide');
-          contrastWarningElement.classList.add('on');
-          disablePointerEvents(); // Disable pointer events for alert module in animated state
-          
-          setTimeout(() => {
-            contrastWarningElement.classList.remove('slideup');
-            enablePointerEvents(); // Enable pointer events for alert module after animation is finished
-            isAnimatingRef.current = false; // Reset the flag after animation
-          }, 500);
-
         }
-      }
-    }
-  }, 50); // Adjust the debounce delay (in milliseconds) as needed
+        else if (!rcpSaturationActive) {
+          if (contrastRatio && contrastRatio < 3 && !isAnimatingRef.current) { // Opens alert module when contrast below 3:1
+            if (contrastWarningElement.classList.contains('hide')) {
+              isAnimatingRef.current = true; // Set the flag to true to indicate animation
+                contrastWarningElement.classList.add('slideup');
+                contrastWarningElement.classList.remove('hide');
+                contrastWarningElement.classList.add('on');
+                disablePointerEvents(); // Disable pointer events for alert module in animated state
+          
+                setTimeout(() => {
+                  contrastWarningElement.classList.remove('slideup');
+                  enablePointerEvents(); // Enable pointer events for alert module after animation is finished
+                  isAnimatingRef.current = false; // Reset the flag after animation
+                }, 500);
+              } 
+            }
+          }
+        }
+      }, 50); // Adjust the debounce delay (in milliseconds) as needed
 
     useEffect(() => {
       updateCompliantColor();  // Handles color changes whenever fgcolor or bgcolor changes
