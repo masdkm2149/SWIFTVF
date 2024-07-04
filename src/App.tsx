@@ -236,6 +236,7 @@ if (slntValue === 900 && squiValue === 900) {
     fontFamily: 'SWIFT',
     textAlign: 'center',
     display: 'flex',
+    flexFlow: 'column',
     fontSize: getFontSize(),
     lineHeight: 0.6,
     fontVariationSettings:
