@@ -242,8 +242,7 @@ if (slntValue === 900 && squiValue === 900) {
       `'swgh' ${swghValue}, ` +
       `'twgh' ${twghValue}, ` +
       `'slnt' ${slntValue}`,
-      fontStyle: slntValue === 900 ? 'italic' : 'normal', // Adjust based on slntValue
-
+  
         // Centering adjustment for italic or slanted text
         transform: `translateX(${translateXPercentage}%)`,
   }}
